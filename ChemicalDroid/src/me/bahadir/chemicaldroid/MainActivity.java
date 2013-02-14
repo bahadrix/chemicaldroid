@@ -1,9 +1,11 @@
 package me.bahadir.chemicaldroid;
 
+import me.bahadir.chemicaldroid.models.Chemical;
 import me.bahadir.utils.BXDB;
 import android.os.Bundle;
 import android.app.Activity;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.Menu;
 
@@ -15,14 +17,18 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		try {
 			BXDB db = new BXDB(this, "chemreac", 1);
-			Cursor cursor = db.getReadableDatabase().rawQuery("SELECT * FROM reactivity LIMIT 10",null);
+			
+			Cursor cursor = db.readQuery("SELECT * FROM chemicals LIMIT 10");
 			if (cursor.moveToFirst()) {
 				do {
-					Log.i("INFO", cursor.getString(cursor.getColumnIndex("gas_reference")));
+					Chemical chem = new Chemical(cursor);
+					
+					Log.i("baha", chem.chemical_profile);
 				} while (cursor.moveToNext());
 			} else {
-				Log.i("BXDB", "Hic bulunamadi");
+				Log.i("baha", "Hic bulunamadi");
 			}
+			
 		} catch (Exception e) {
 			Log.e("ERROR", e.getMessage());
 		}

@@ -4,12 +4,15 @@
 package me.bahadir.utils;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.Cursor;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 /**
- * @author vaÄ±o
+ * Bu sinif SQLiteAssetHelper sinifini dolayýsýyla SQLiteOpenHelper sýnýfýný
+ * extend etmek için var
+ * 
+ * @author Bahadir
  *
  */
 public class BXDB extends SQLiteAssetHelper {
@@ -23,6 +26,11 @@ public class BXDB extends SQLiteAssetHelper {
 		this.DBName = DBName;
 		this.context = context;
 		this.version = version;
+		
+	}
+	
+	public Cursor readQuery(String queryString) {
+		return getReadableDatabase().rawQuery(queryString,null);
 	}
 	
 
